@@ -1,5 +1,4 @@
-﻿import { useEffect, useState } from "react";
-import GooeyNav from "../components/GooeyNav.tsx";
+import { useEffect, useState } from "react";
 import DemoLoading from "./demo-loading.jsx";
 
 const DEMO_LOST_ITEMS = [
@@ -173,11 +172,6 @@ const userDialogues = [
   "- Where Legends Are Made of Lost ID Cards -",
 ];
 
-const navItems = [
-  { label: "Lost Items", href: "#" },
-  { label: "Claimed Items", href: "#" },
-];
-
 function DemoApp({ onBack }) {
   const [isLoading, setIsLoading] = useState(true);
   const [fadeOut, setFadeOut] = useState(false);
@@ -302,10 +296,10 @@ function DemoApp({ onBack }) {
   }
 
   return (
-    <div className={`min-h-screen bg-slate-950 px-4 py-8 text-slate-100 transition-opacity duration-300 ${isExiting ? "opacity-0" : "opacity-100"}`}>
-      <div className="mx-auto flex max-w-6xl flex-col gap-6 rounded-3xl border border-slate-800 bg-slate-900/90 p-6 shadow-2xl shadow-black/20 sm:p-8">
-        <header className="space-y-4 flex-col">
-          <div className="flex flex-col gap-3 rounded-3xl border border-amber-400/20 bg-amber-400/10 p-4 sm:flex-row sm:justify-between">
+    <div className={`student-page min-h-screen bg-slate-950 text-slate-100 transition-opacity duration-300 ${isExiting ? "opacity-0" : "opacity-100"}`}>
+      <div className="student-layout mx-auto flex max-w-6xl flex-col rounded-3xl border border-slate-800 bg-slate-900/90 shadow-2xl shadow-black/20">
+        <header className="student-header flex-col">
+          <div className="student-topbar flex flex-col gap-3 rounded-3xl border border-amber-400/20 bg-amber-400/10 sm:flex-row sm:justify-between">
             <div>
               <p className="text-sm uppercase tracking-[0.3em] text-amber-300">Student Demo</p>
               <h1 className="text-2xl font-semibold text-white">Student Dashboard</h1>
@@ -314,46 +308,50 @@ function DemoApp({ onBack }) {
               Choose Another Role
             </button>
           </div>
-          <div className="flex flex-wrap items-center justify-center gap-3">
-            <h1 className="text-3xl font-semibold text-white sm:text-4xl">Kingdom of Losttopia</h1>
+          <div className="student-intro flex flex-wrap items-center justify-center gap-3">
+            <h1 className="student-title text-3xl font-semibold text-white sm:text-4xl">Kingdom of Losttopia</h1>
           </div>
-          <p className={`mx-auto max-w-3xl text-sm text-slate-400 transition-opacity duration-500 text-center ${fade ? "opacity-100" : "opacity-0"}`}>
+          <p className={`student-subtitle mx-auto max-w-3xl text-sm text-slate-400 transition-opacity duration-500 text-center ${fade ? "opacity-100" : "opacity-0"}`}>
             {userDialogues[dialogueIndex]}
           </p>
         </header>
 
-        <section className="flex flex-col gap-4">
-          <div className="w-full flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <div className="w-full sm:w-auto flex-start">
-                <GooeyNav
-                  items={navItems}
-                  particleCount={15}
-                  particleDistances={[90, 10]}
-                  particleR={100}
-                  activeIndex={showClaimedItems ? 1 : 0}
-                  onIndexChange={(index) => {
-                    setShowClaimedItems(index === 1);
+        <div className="student-toolbar">
+          <div className="student-toolbar-row">
+            <div className="brutal-tabs" role="tablist" aria-label="Inventory view">
+              {[
+                { label: "Lost Items", claimed: false },
+                { label: "Claimed Items", claimed: true },
+              ].map(({ label, claimed }) => (
+                <button
+                  key={label}
+                  type="button"
+                  role="tab"
+                  aria-selected={showClaimedItems === claimed}
+                  className={`brutal-tab ${showClaimedItems === claimed ? "brutal-tab-active" : ""}`}
+                  onClick={() => {
+                    setShowClaimedItems(claimed);
                     setSearchTerm("");
                   }}
-                  animationTime={600}
-                  timeVariance={300}
-                  colors={[1, 2, 3, 1, 2, 3, 1, 4]}
-                />
+                >
+                  {label}
+                </button>
+              ))}
             </div>
 
-            <div className="flex w-full flex-col gap-3 sm:flex-row sm:items-center sm:ml-4 sm:w-auto">
-              <div className="flex w-full max-w-md items-center overflow-hidden rounded-full border border-slate-700 bg-slate-950 pr-1 shadow-inner shadow-black/10 sm:w-auto">
+            <div className="student-search-controls">
+              <div className="student-search flex w-full max-w-md items-center overflow-hidden rounded-full border border-slate-700 bg-slate-950 shadow-inner shadow-black/10 sm:w-auto">
                 <input
                   type="text"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   placeholder="Search items, locations, owners..."
-                  className="w-full bg-transparent px-4 py-3 text-sm text-slate-100 outline-none placeholder:text-slate-500"
+                  className="student-search-input w-full bg-transparent px-4 py-3 text-sm text-slate-100 outline-none placeholder:text-slate-500"
                 />
                 <button
                   type="button"
                   onClick={() => setSearchTerm("")}
-                  className="rounded-full bg-slate-800 px-4 py-2 text-sm font-semibold text-slate-200 transition hover:bg-slate-700"
+                  className="student-clear-button rounded-full bg-slate-800 px-4 py-2 text-sm font-semibold text-slate-200 transition hover:bg-slate-700"
                 >
                   Clear
                 </button>
@@ -361,7 +359,7 @@ function DemoApp({ onBack }) {
               <button
                 type="button"
                 onClick={refreshTable}
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-slate-800 px-5 py-3 text-sm font-semibold text-amber-200 transition hover:bg-slate-700"
+                className="student-refresh-button inline-flex items-center justify-center gap-2 rounded-full bg-slate-800 px-5 py-3 text-sm font-semibold text-amber-200 transition hover:bg-slate-700"
               >
                 <svg className="h-5 w-5" viewBox="0 0 48 48" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                   <path d="M35.3 12.7c-2.89-2.9-6.88-4.7-11.3-4.7-8.84 0-15.98 7.16-15.98 16s7.14 16 15.98 16c7.45 0 13.69-5.1 15.46-12h-4.16c-1.65 4.66-6.07 8-11.3 8-6.63 0-12-5.37-12-12s5.37-12 12-12c3.31 0 6.28 1.38 8.45 3.55l-6.45 6.45h14v-14l-4.7 4.7z" />
@@ -370,10 +368,10 @@ function DemoApp({ onBack }) {
               </button>
             </div>
           </div>
-        </section>
+        </div>
 
-        <section className="overflow-x-auto rounded-1xl border border-slate-800 bg-slate-950/80 p-1 shadow-inner shadow-black/10">
-          <table className="min-w-full border-collapse text-left text-sm text-slate-200 md:text-base">
+        <section className="student-table overflow-x-auto rounded-1xl border border-slate-800 bg-slate-950/80 p-1 shadow-inner shadow-black/10">
+          <table className="student-items-table min-w-full border-collapse text-left text-sm text-slate-200 md:text-base">
             <thead>
               <tr className="bg-slate-900 text-slate-300">
                 {[
