@@ -64,21 +64,33 @@ function RolePickerDemo() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-950 px-4 py-10 text-slate-100">
-      <div className={`w-full max-w-3xl rounded-3xl border border-slate-800 bg-slate-900/90 p-8 shadow-2xl shadow-black/30 transition-all duration-300 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"}`}>
-        <p className="text-sm uppercase tracking-[0.3em] text-amber-300">Lost & Found WebApp Demo</p>
-        <h1 className="mt-3 text-3xl font-semibold text-white">Choose the account you want to experience</h1>
-        <p className="mt-3 text-slate-400">Each role explores a different version of the demo, while the student path keeps the existing flow intact.</p>
-        <div className="mt-8 grid gap-4 md:grid-cols-3">
-          {roleOptions.map((option) => (
-            <button key={option.value} type="button" onClick={() => handleRoleSelect(option.value)} className="rounded-3xl border border-slate-800 bg-slate-950/80 p-5 text-left transition hover:border-amber-400 hover:bg-slate-900">
-              <p className="text-lg font-semibold text-white">{option.label}</p>
-              <p className="mt-2 text-sm text-slate-400">{option.description}</p>
-            </button>
-          ))}
+    <main className={`brutal-page transition-opacity duration-300 ${isVisible ? "opacity-100" : "opacity-0"}`}>
+      <section className="brutal-panel">
+        <div className="brutal-topline">
+          <span className="brutal-topline-mark">Lost & Found / Demo 001</span>
+          <span>Interactive prototype</span>
         </div>
-      </div>
-    </div>
+        <div className="brutal-content">
+          <p className="brutal-kicker">Lost & Found WebApp</p>
+          <h1 className="brutal-title">Pick your point of view.</h1>
+          <p className="brutal-copy">Three roles. One lost-property desk. Choose an account to step into the demo.</p>
+          <div className="brutal-role-grid">
+            {roleOptions.map((option, index) => (
+              <button
+                key={option.value}
+                type="button"
+                onClick={() => handleRoleSelect(option.value)}
+                className="brutal-role-card"
+              >
+                <span className="brutal-role-index">0{index + 1}</span>
+                <span className="brutal-role-name">{option.label}</span>
+                <span className="brutal-role-description">{option.description}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+    </main>
   );
 }
 
